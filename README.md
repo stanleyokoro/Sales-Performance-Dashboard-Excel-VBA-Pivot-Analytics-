@@ -92,8 +92,8 @@ This project demonstrates a robust Excel-based Sales Dashboard utilizing advance
 
 ## 📬 Contact
 
-Email: your.email@example.com  
-LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/yourprofile)
+Email: info@stanleyokoro.com.ng  
+LinkedIn: Stanley Okoro (https://www.linkedin.com/in/timelesshov/)
 
 ## 📄 License
 
