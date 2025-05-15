@@ -1,0 +1,21 @@
+' Sample VBA to Refresh Pivot Table
+Sub RefreshAllData()
+  ThisWorkbook.RefreshAll
+End Sub
+
+' Reset Filters and Slicers
+Sub ResetDashboard()
+  Dim pt As PivotTable
+  For Each pt In Sheets("Dashboard").PivotTables
+      pt.ClearAllFilters
+  Next pt
+  Call RefreshAllData
+End Sub
+
+' Dynamic Filter using Combo Box
+Private Sub ComboBox1_Change()
+  Dim selectedValue As String
+  selectedValue = ComboBox1.Value
+  Sheets("Dashboard").Range("B2").Value = selectedValue
+  Call RefreshAllData
+End Sub

@@ -1,0 +1,127 @@
+# Total Revenue
+Total Revenue = 
+SUMX(fact_table, RELATED(products_table[Sales Price]) * fact_table[Quantity Sold])
+
+# COGS
+COGS = 
+SUMX(fact_table, RELATED(products_table[Cost Price]) * fact_table[Quantity Sold])
+
+# Profit Margin
+Profit Margin = 
+[Total Revenue] - [COGS]
+
+# % Profit Margin
+% Profit Margin = 
+DIVIDE([Profit Margin], [Total Revenue])
+
+# Total Transactions
+Transactions = 
+COUNTROWS(fact_table)
+
+# Total Refund
+Total Refund = 
+SUMX(fact_table, fact_table[Quantity Returned] * RELATED(products_table[Sales Price]))
+
+# Refund Rate
+Refund Rate = 
+DIVIDE([Total Refund], [Total Revenue], 0)
+
+# Distinct Products Sold
+# Products = 
+DISTINCTCOUNT(fact_table[Product ID])
+
+# Total Quantity Sold
+Total Quantity = 
+SUM(fact_table[Quantity Sold])
+
+# Quantity Returned
+Qty Returned = 
+SUM(fact_table[Quantity Returned])
+
+# Return Rate
+Return Rate = 
+DIVIDE([Qty Returned], SUM(fact_table[Quantity Sold]), 0)
+
+# Total Sales Target
+Total Target = 
+SUM(monthly_store_targets[Monthly Target])
+
+# Distinct Customers
+# Customers = 
+DISTINCTCOUNT(fact_table[Customer ID])
+
+# Distinct Locations
+# Locations = 
+DISTINCTCOUNT(Dim_Customer[Location])
+
+# Average Customer Age
+Average Customer Age = 
+AVERAGE(Dim_Customer[Customer Age])
+
+
+# Monthly Sales
+Monthly Sales = 
+  CALCULATE(
+      [Total Revenue], 
+      GROUPBY(fact_table, fact_table[Month], fact_table[Year])
+  )
+
+# Year-to-Date Revenue
+YTD Revenue = 
+  TOTALYTD([Total Revenue], fact_table[Date])
+
+# Monthly Growth Rate
+Monthly Growth = 
+  DIVIDE(
+      [Monthly Sales] - CALCULATE([Monthly Sales], PREVIOUSMONTH(fact_table[Date])),
+      CALCULATE([Monthly Sales], PREVIOUSMONTH(fact_table[Date]))
+  )
+
+# Year-over-Year Growth
+YOY Growth = 
+  DIVIDE(
+      [Monthly Sales] - CALCULATE([Monthly Sales], SAMEPERIODLASTYEAR(fact_table[Date])),
+      CALCULATE([Monthly Sales], SAMEPERIODLASTYEAR(fact_table[Date]))
+  )
+
+
+# Cost of Goods Sold
+COGS = 
+  SUMX(fact_table, RELATED(products_table[Cost Price]) * fact_table[Quantity Sold])
+
+# Profit Margin
+Profit Margin = [Total Revenue] - [COGS]
+
+# % Profit Margin
+% Profit Margin = 
+  DIVIDE([Profit Margin], [Total Revenue])
+
+# # Customers
+#customers = 
+  DISTINCTCOUNT(fact_table[Customer ID])
+
+# Top 5 Customers
+Top Customers = 
+  TOPN(5, VALUES(Dim_Customer[Customer Name]), [Profit Margin], DESC)
+
+# # Products
+#products = 
+  DISTINCTCOUNT(fact_table[Product ID])
+
+
+# Total Qty Sold by Gender
+Qty by Gender = 
+  CALCULATE(SUM(fact_table[Quantity Sold]), Dim_Customer[Gender] = "Male/Female")
+
+# Weekend vs Weekday Classification (calculated column in fact_table)
+Day Type = 
+  IF(WEEKDAY(fact_table[Date], 2) > 5, "Weekend", "Weekday")
+
+# Qty by Day Type
+Qty by weekday = 
+  CALCULATE(SUM(fact_table[Quantity Sold]), fact_table[Day Type] = "Weekend")
+
+Qty by weekend = 
+CALCULATE(SUM(fact_table[Quantity Sold]), fact_table[Day Type] = "Weekday")  
+
+
