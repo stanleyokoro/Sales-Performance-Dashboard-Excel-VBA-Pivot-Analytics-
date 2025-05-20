@@ -81,10 +81,9 @@ This project demonstrates a robust Excel-based Sales Dashboard utilizing advance
 📁 Sales-Performance-Dashboard
 ├── 📄 Sales_Dashboard.xlsm
 ├── 📄 README.md
-├── 📁 DAX_Measures
-│   ├── 📄 Dax code.dax
-└── 📁 VBA_Scripts
-    └── 📄 RefreshAll.dax
+├── 📄 business_dashboard.png
+├── 📄 Dax code.dax
+└── 📄 RefreshAll.dax
 ```
 
 ## 📬 Contact
